@@ -11,3 +11,7 @@ rep -id->vda1 -path->/home/julio/MIA/REPORTES/disk.png -name->disk
 
 mkfs -type->FuLL -id->vda1
 mkfs -type->fast -id->vda2
+
+#LOGIN
+login -usr->root -pwd->123 -id->vda1
+#login -usr->"mi usuario" -pwd->"mi pwd" -id->vda1

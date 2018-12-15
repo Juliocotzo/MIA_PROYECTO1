@@ -247,7 +247,7 @@ void EXT3(char path[], int indice, int n){
     /*********************************************************************************
      **                             SUPER BLOQUE                                    **
      *********************************************************************************/
-    SB.inicio = '#';
+
     SB.s_filesystem_type = 3;
     SB.s_inodes_count = n;
     SB.s_blocks_count = 3*n;

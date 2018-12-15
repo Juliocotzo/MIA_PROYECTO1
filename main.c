@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "analizador.h"
 
+
 int main(){
 
     char str[250];

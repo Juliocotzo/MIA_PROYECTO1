@@ -10,6 +10,7 @@
 #include "rep.h"
 #include "exec.h"
 #include "mkfs.h"
+#include "login.h"
 
 
 #define RED   "\x1B[1;31m"
@@ -25,6 +26,8 @@ typedef struct command{
     int id;
     char name[15];
 } cmd;
+
+
 
 void exec();
 
@@ -47,6 +50,8 @@ int isKeyword(char buffer[]){
         return 7;
     }else if (strcasecmp("MKFS",buffer)==0) {
         return 8;
+    }else if (strcasecmp("LOGIN",buffer)==0) {
+        return 9;
     }
     return 0;
 }
@@ -78,6 +83,9 @@ void commandAnalyzer(int state, char str[], int start){
         break;
     case 8:
         processMKFS(str, start);
+        break;
+    case 9:
+        processLOGIN(str, start);
         break;
     }
 }
