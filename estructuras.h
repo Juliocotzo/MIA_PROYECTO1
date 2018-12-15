@@ -39,6 +39,7 @@ typedef struct nodo{
 }nodo;
 
 typedef struct superBloque{
+    char inicio;
     int s_filesystem_type;
     int s_inodes_count;
     int s_blocks_count;

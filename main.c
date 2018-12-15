@@ -25,7 +25,7 @@ int main(){
         }
         if(strcmp(str, "EXEC1")==0){
 
-            processCommand("exec -path->\"/home/julio/Documentos/Qt Creator/PROYECTO/Entrada.sh\"");
+            processCommand("exec -path->\"/home/julio/Documentos/Qt Creator/PROYECTO1/Entrada.sh\"");
         }
 
 

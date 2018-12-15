@@ -17,6 +17,7 @@ HEADERS += \
     rmdisk.h \
     unmount.h \
     mkfs.h \
-    mkfs.h
+    mkfs.h \
+    login.h
 
 DISTFILES +=

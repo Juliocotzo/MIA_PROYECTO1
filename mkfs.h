@@ -8,8 +8,7 @@
 #include <math.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "estructuras.h"
-#include "mount.h";
+//#include "estructuras.h"
 
 #define RED   "\x1B[1;31m"
 #define GRN   "\x1B[32m"
@@ -149,29 +148,23 @@ void mkfs(char id[], char type[]){
     actual = primero;
     char direccion[100];
     char name[25];
-
     struct nodo *aux2;
     struct nodo *actual2;
     int nodo_eliminar;
 
-    printf("\n********************MKFS**************************");
     if(strcmp(id,"")!=0){
 
         strcpy(aux,id);
-
-        while (p<=numNodos) {
+        while (actual != NULL) {
             if (strcmp(aux,actual->id)==0) {
-                nodo_eliminar=p;
-                nodo_eliminar=p;
                 bandera=1;
                 strcpy(direccion,actual->path);
                 strcpy(name,actual->nombre);
                 break;
             }
-            p++;
             actual=actual->siguiente;
-        }
 
+        }
 
         if (bandera==1) {
             if(strcmp(type,"FAST")==0){
@@ -208,6 +201,7 @@ void formato2(char direccion[], char name[]){
         }
         if(bandera==1){
             numeroN=numeroBloques(disco.mbr_partition[i].part_size);
+            printf("\n%s|%d|%i\n",direccion,numeroN,i);
             EXT3(direccion,i,numeroN);
         }else{
             printf("\nERROR: Formato, bandera");
@@ -222,9 +216,7 @@ int numeroBloques(int size){
     int n=0;
     float z;
     int x = size - sizeof(superBloque);
-    int y = 3*sizeof(bloqueApuntadores);
-    y = y + sizeof(inodo) + sizeof(journaling);
-    y = y + 4;
+    int y = sizeof (journaling)+sizeof (inodo)+3*sizeof (bloqueArchivos)+4;
     z = x/y;
     n = floor(z);
     return n;
@@ -248,11 +240,6 @@ void EXT3(char path[], int indice, int n){
         printf("\nERROR: No se pudo abrir el archivo");
         return;
     }
-
-    /*********************************************************************************
-     **                                 FECHA                                       **
-     *********************************************************************************/
-
     time_t tiempo = time(0);
     struct tm *tlocal = localtime(&tiempo);
     strftime(output,18,"%d/%m/%y %H:%M:%S",tlocal);
@@ -260,7 +247,7 @@ void EXT3(char path[], int indice, int n){
     /*********************************************************************************
      **                             SUPER BLOQUE                                    **
      *********************************************************************************/
-
+    SB.inicio = '#';
     SB.s_filesystem_type = 3;
     SB.s_inodes_count = n;
     SB.s_blocks_count = 3*n;
@@ -305,8 +292,8 @@ void EXT3(char path[], int indice, int n){
      jour.journal_tipo_operacion=-1;
      jour.journal_tipo=-1;
      strcpy(jour.journal_nombre,"");
-     strcpy(jour.journal_fecha,"");
      strcpy(jour.journal_contenido,"");
+     jour.journal_fecha = tiempo;
      jour.journal_propietario=-1;
      jour.journal_permisos = -1;
 
