@@ -11,7 +11,12 @@
 #include "exec.h"
 #include "mkfs.h"
 #include "login.h"
-
+#include "logout.h"
+#include "mkgrp.h"
+#include "rmgrp.h"
+#include "mkusr.h"
+#include "rmusr.h"
+#include "chmod.h"
 
 #define RED   "\x1B[1;31m"
 #define GRN   "\x1B[32m"
@@ -52,6 +57,18 @@ int isKeyword(char buffer[]){
         return 8;
     }else if (strcasecmp("LOGIN",buffer)==0) {
         return 9;
+    }else if (strcasecmp("LOGOUT",buffer)==0) {
+        return 10;
+    }else if (strcasecmp("MKGRP",buffer)==0) {
+        return 11;
+    }else if (strcasecmp("RMGRP",buffer)==0) {
+        return 12;
+    }else if (strcasecmp("MKUSR",buffer)==0) {
+        return 13;
+    }else if (strcasecmp("RMUSR",buffer)==0) {
+        return 14;
+    }else if (strcasecmp("CHMOD",buffer)==0) {
+        return 15;
     }
     return 0;
 }
@@ -86,6 +103,24 @@ void commandAnalyzer(int state, char str[], int start){
         break;
     case 9:
         processLOGIN(str, start);
+        break;
+    case 10:
+        processLOGOUT(str, start);
+        break;
+    case 11:
+        processMKGRP(str, start);
+        break;
+    case 12:
+        processRMGRP(str, start);
+        break;
+    case 13:
+        processMKUSR(str, start);
+        break;
+    case 14:
+        processRMUSR(str, start);
+        break;
+    case 15:
+        processCHMOD(str, start);
         break;
     }
 }

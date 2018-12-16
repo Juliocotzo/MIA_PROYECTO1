@@ -305,30 +305,21 @@ void EXT3(char path[], int indice, int n){
     if(file!=NULL){
         fread(&disco,sizeof(MBR),1,file);
         rewind(file);
-        //printf("\nPosicion INICIO: %i",ftell(file));
         fseek(file,inicio_sb,SEEK_SET);
-        //printf("\nPosicion SB: %i",ftell(file));
         fwrite(&SB,sizeof(superBloque),1,file);
         int n2 = n*3;
         for(i=0;i<n;++i){
             fwrite(&jour,sizeof(journaling),1,file);
         }
-        //fwrite(&jour,sizeof(journaling),1,file);
-        //printf("\nPosicion BM1: %i",ftell(file));
-        //printf("\nN: %i",n);
         for(i=0;i<n;++i){
             fwrite("0",1,1,file);
         }
-        //printf("\nPosicion BM2: %i",ftell(file));
-        //printf("\nN: %i",n);
         for(i=0;i<n2;++i){
             fwrite("0",1,1,file);
         }
-        //printf("\nPosicion INODO: %i",ftell(file));
         for(i=0;i<n;++i){
             fwrite(&i_nodo,sizeof(inodo),1,file);
         }
-        //printf("\nPosicion BloqueS: %i",ftell(file));
         strcpy(&ba.b_content,"");
         for(i=0;i<n2;++i){
             fwrite(&ba,sizeof(bloqueArchivos),1,file);

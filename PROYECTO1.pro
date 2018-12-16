@@ -18,6 +18,12 @@ HEADERS += \
     unmount.h \
     mkfs.h \
     mkfs.h \
-    login.h
+    login.h \
+    logout.h \
+    mkgrp.h \
+    rmgrp.h \
+    mkusr.h \
+    rmusr.h \
+    chmod.h
 
 DISTFILES +=
