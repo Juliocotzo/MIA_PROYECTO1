@@ -17,6 +17,20 @@
 #include "mkusr.h"
 #include "rmusr.h"
 #include "chmod.h"
+#include "mkfile.h"
+#include "cat.h"
+#include "rem.h"
+#include "edit.h"
+#include "ren.h"
+#include "mkdir.h"
+#include "cp.h"
+#include "mv.h"
+#include "find.h"
+#include "chown.h"
+#include "chgrp.h"
+#include "recovery.h"
+#include "loss.h"
+
 
 #define RED   "\x1B[1;31m"
 #define GRN   "\x1B[32m"
@@ -69,6 +83,32 @@ int isKeyword(char buffer[]){
         return 14;
     }else if (strcasecmp("CHMOD",buffer)==0) {
         return 15;
+    }else if (strcasecmp("MKFILE",buffer)==0) {
+        return 16;
+    }else if (strcasecmp("CAT",buffer)==0) {
+        return 17;
+    }else if (strcasecmp("REM",buffer)==0) {
+        return 18;
+    }else if (strcasecmp("EDIT",buffer)==0) {
+        return 19;
+    }else if (strcasecmp("REN",buffer)==0) {
+        return 20;
+    }else if (strcasecmp("MKDIR",buffer)==0) {
+        return 21;
+    }else if (strcasecmp("CP",buffer)==0) {
+        return 22;
+    }else if (strcasecmp("MV",buffer)==0) {
+        return 23;
+    }else if (strcasecmp("FIND",buffer)==0) {
+        return 24;
+    }else if (strcasecmp("CHOWN",buffer)==0) {
+        return 25;
+    }else if (strcasecmp("CHGRP",buffer)==0) {
+        return 26;
+    }else if (strcasecmp("RECOVERY",buffer)==0) {
+        return 27;
+    }else if (strcasecmp("LOSS",buffer)==0) {
+        return 28;
     }
     return 0;
 }
@@ -121,6 +161,45 @@ void commandAnalyzer(int state, char str[], int start){
         break;
     case 15:
         processCHMOD(str, start);
+        break;
+    case 16:
+        processMKFILE(str, start);
+        break;
+    case 17:
+        processCAT(str, start);
+        break;
+    case 18:
+        processREM(str, start);
+        break;
+    case 19:
+        processEDIT(str, start);
+        break;
+    case 20:
+        processREN(str, start);
+        break;
+    case 21:
+        processMKDIR(str, start);
+        break;
+    case 22:
+        processCP(str, start);
+        break;
+    case 23:
+        processMV(str, start);
+        break;
+    case 24:
+        processFIND(str, start);
+        break;
+    case 25:
+        processCHOWN(str, start);
+        break;
+    case 26:
+        processCHGRP(str, start);
+        break;
+    case 27:
+        processRECOVERY(str, start);
+        break;
+    case 28:
+        processLOSS(str, start);
         break;
     }
 }

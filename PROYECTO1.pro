@@ -24,6 +24,19 @@ HEADERS += \
     rmgrp.h \
     mkusr.h \
     rmusr.h \
-    chmod.h
+    chmod.h \
+    mkfile.h \
+    cat.h \
+    rem.h \
+    edit.h \
+    ren.h \
+    mkdir.h \
+    cp.h \
+    mv.h \
+    find.h \
+    chown.h \
+    chgrp.h \
+    recovery.h \
+    loss.h
 
 DISTFILES +=

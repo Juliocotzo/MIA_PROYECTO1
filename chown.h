@@ -19,21 +19,21 @@
 #define WHT   "\x1B[37m"
 #define RESET "\x1B[0m"
 
-typedef struct chmod{
+typedef struct chown{
     char path[50];
-    char ugo[15];
+    char usr[15];
     char R[15];
-} chmod_init;
+} chown_init;
 
 
-int processCHMOD(char str[], int cont){
+int processCHOWN(char str[], int cont){
     if(cont == -1){
         printf(RED "ERROR: COMANDO SIN PARAMETROS \n" RESET);
         return 0;
     }
-    chmod_init rm;
+    chown_init rm;
     memset(&rm.path,'\0',sizeof(rm.path));
-    memset(&rm.ugo,'\0',sizeof(rm.ugo));
+    memset(&rm.usr,'\0',sizeof(rm.usr));
     memset(&rm.R,'\0',sizeof(rm.R));
     // Base Program
     char ch, buffer[100];
@@ -74,8 +74,8 @@ int processCHMOD(char str[], int cont){
             else if(strcasecmp("R", buffer) == 0){
                 strcat(rm.R, "R");
 
-            }else if(strcasecmp("UGO", name) == 0){
-                strcat(rm.ugo, buffer);
+            }else if(strcasecmp("USR", name) == 0){
+                strcat(rm.usr, buffer);
 
             }else{
                 printf(RED "ERROR: COMANDO INEXISTENTE1\n" RESET);
@@ -98,8 +98,8 @@ int processCHMOD(char str[], int cont){
         else if(strcasecmp("R", buffer) == 0){
             strcat(rm.R, "R");
 
-        }else if(strcasecmp("UGO", name) == 0){
-            strcat(rm.ugo, buffer);
+        }else if(strcasecmp("USR", name) == 0){
+            strcat(rm.usr, buffer);
 
         }else{
             printf(RED "ERROR: COMANDO INEXISTENTE2\n" RESET);
@@ -112,7 +112,7 @@ int processCHMOD(char str[], int cont){
         memset(&buffer,'\0',sizeof(buffer));
     }
 
-    printf("\nPATH->%s|UGO->%s|R->%s|\n",rm.path,rm.ugo,rm.R);
+    printf("\nPATH->%s|USR->%s|R->%s|\n",rm.path,rm.usr,rm.R);
 
 
     return 0;

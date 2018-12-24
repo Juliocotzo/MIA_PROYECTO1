@@ -19,22 +19,24 @@
 #define WHT   "\x1B[37m"
 #define RESET "\x1B[0m"
 
-typedef struct chmod{
+typedef struct mkfile{
     char path[50];
-    char ugo[15];
-    char R[15];
-} chmod_init;
+    int size;
+    char cont[50];
+    char P[5]
+} mkfile_init;
 
 
-int processCHMOD(char str[], int cont){
+int processMKFILE(char str[], int cont){
     if(cont == -1){
         printf(RED "ERROR: COMANDO SIN PARAMETROS \n" RESET);
         return 0;
     }
-    chmod_init rm;
+    mkfile_init rm;
     memset(&rm.path,'\0',sizeof(rm.path));
-    memset(&rm.ugo,'\0',sizeof(rm.ugo));
-    memset(&rm.R,'\0',sizeof(rm.R));
+    memset(&rm.cont,'\0',sizeof(rm.cont));
+    memset(&rm.P,'\0',sizeof(rm.P));
+    rm.size = 0;
     // Base Program
     char ch, buffer[100];
     memset(&buffer,'\0',sizeof(buffer));
@@ -71,11 +73,14 @@ int processCHMOD(char str[], int cont){
             if(strcasecmp("PATH", name) == 0){
                 strcat(rm.path, buffer);
             }
-            else if(strcasecmp("R", buffer) == 0){
-                strcat(rm.R, "R");
+            else if(strcasecmp("P", buffer) == 0){
+                strcat(rm.P, "P");
 
-            }else if(strcasecmp("UGO", name) == 0){
-                strcat(rm.ugo, buffer);
+            }else if(strcasecmp("SIZE", name) == 0){
+                rm.size = atoi(buffer);
+
+            }else if(strcasecmp("CONT", name) == 0){
+                strcat(rm.cont, buffer);
 
             }else{
                 printf(RED "ERROR: COMANDO INEXISTENTE1\n" RESET);
@@ -91,18 +96,20 @@ int processCHMOD(char str[], int cont){
 
     if((j != 0) && read ){
         buffer[j] = '\0';
-        // Posible optimizacion
         if(strcasecmp("PATH", name) == 0){
             strcat(rm.path, buffer);
         }
-        else if(strcasecmp("R", buffer) == 0){
-            strcat(rm.R, "R");
+        else if(strcasecmp("P", buffer) == 0){
+            strcat(rm.P, "P");
 
-        }else if(strcasecmp("UGO", name) == 0){
-            strcat(rm.ugo, buffer);
+        }else if(strcasecmp("SIZE", name) == 0){
+            rm.size = atoi(buffer);
+
+        }else if(strcasecmp("CONT", name) == 0){
+            strcat(rm.cont, buffer);
 
         }else{
-            printf(RED "ERROR: COMANDO INEXISTENTE2\n" RESET);
+            printf(RED "ERROR: COMANDO INEXISTENTE1\n" RESET);
 
             printf("ch:%c",ch);
             printf("buffer:%s",buffer);
@@ -112,10 +119,9 @@ int processCHMOD(char str[], int cont){
         memset(&buffer,'\0',sizeof(buffer));
     }
 
-    printf("\nPATH->%s|UGO->%s|R->%s|\n",rm.path,rm.ugo,rm.R);
+    printf("\nPATH->%s|SIZE->%d|CONT->%s|P->%s|\n",rm.path,rm.size,rm.cont,rm.P);
 
 
     return 0;
 }
-
 

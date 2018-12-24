@@ -19,22 +19,20 @@
 #define WHT   "\x1B[37m"
 #define RESET "\x1B[0m"
 
-typedef struct chmod{
+typedef struct cp{
     char path[50];
-    char ugo[15];
-    char R[15];
-} chmod_init;
+    char dest[50];
+} cp_init;
 
-
-int processCHMOD(char str[], int cont){
+int processCP(char str[], int cont){
     if(cont == -1){
         printf(RED "ERROR: COMANDO SIN PARAMETROS \n" RESET);
         return 0;
     }
-    chmod_init rm;
+    cp_init rm;
     memset(&rm.path,'\0',sizeof(rm.path));
-    memset(&rm.ugo,'\0',sizeof(rm.ugo));
-    memset(&rm.R,'\0',sizeof(rm.R));
+    memset(&rm.dest,'\0',sizeof(rm.dest));
+
     // Base Program
     char ch, buffer[100];
     memset(&buffer,'\0',sizeof(buffer));
@@ -64,58 +62,39 @@ int processCHMOD(char str[], int cont){
         if(ch == '#'){
             break;
         }
-        if(ch == ' '  && !read){
+        if(ch == ' ' && !read){
             buffer[j++] = ch;
         }else if((ch == ' ' || ch == '\n') && (j != 0) && read){
             buffer[j] = '\0';
             if(strcasecmp("PATH", name) == 0){
                 strcat(rm.path, buffer);
-            }
-            else if(strcasecmp("R", buffer) == 0){
-                strcat(rm.R, "R");
-
-            }else if(strcasecmp("UGO", name) == 0){
-                strcat(rm.ugo, buffer);
-
+            }else if(strcasecmp("DEST", name) == 0){
+                strcat(rm.dest, buffer);
             }else{
-                printf(RED "ERROR: COMANDO INEXISTENTE1\n" RESET);
-
-                printf("ch:%c",ch);
-                printf("buffer:%s",buffer);
+                printf(RED "ERsaROR: COMANDO INEXISTENTE\n" RESET);
                 return 0;
             }
             j = 0;
             memset(&buffer,'\0',sizeof(buffer));
         }
     }
-
-    if((j != 0) && read ){
+    if((j != 0) && read){
         buffer[j] = '\0';
         // Posible optimizacion
         if(strcasecmp("PATH", name) == 0){
             strcat(rm.path, buffer);
-        }
-        else if(strcasecmp("R", buffer) == 0){
-            strcat(rm.R, "R");
-
-        }else if(strcasecmp("UGO", name) == 0){
-            strcat(rm.ugo, buffer);
-
+        }else if(strcasecmp("DEST", name) == 0){
+            strcat(rm.dest, buffer);
         }else{
-            printf(RED "ERROR: COMANDO INEXISTENTE2\n" RESET);
-
-            printf("ch:%c",ch);
-            printf("buffer:%s",buffer);
+            printf(RED "ERsaROR: COMANDO INEXISTENTE\n" RESET);
             return 0;
         }
         j = 0;
         memset(&buffer,'\0',sizeof(buffer));
     }
 
-    printf("\nPATH->%s|UGO->%s|R->%s|\n",rm.path,rm.ugo,rm.R);
+    printf("\nPATH->%s|DEST->%s|\n",rm.path,rm.dest);
 
 
     return 0;
 }
-
-

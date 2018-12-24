@@ -22,6 +22,19 @@
 int processLOGOUT(char str[], int cont){
     if(cont == -1){
         printf(GRN "LOGOUT\n" RESET);
+        if(bandera_log==1){
+            strcpy(usuario,"");
+            strcpy(contrasenia,"");
+            strcpy(id_activo,"");
+            strcpy(id_activo3,"");
+            strcpy(path_activa,"");
+            strcpy(name_activo,"");
+            id_activo2='\0';
+            bandera_log = 0;
+            printf("\nSesion cerrada");
+        }else{
+            printf("\nERROR: No se ha iniciado ninguna sesion");
+        }
         return 0;
     }
 

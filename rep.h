@@ -34,6 +34,7 @@ typedef struct rep{
     char id[15];
     char name[15];
     char path[80];
+    char ruta[50]
 } rep_init;
 
 void reporteDISK(char path[], char path2[]);
@@ -64,6 +65,7 @@ int processREP(char str[], int cont){
     memset(&rm.id,'\0',sizeof(rm.id));
     memset(&rm.name,'\0',sizeof(rm.name));
     memset(&rm.path,'\0',sizeof(rm.path));
+    memset(&rm.ruta,'\0',sizeof(rm.ruta));
     // Base Program
     char ch, buffer[100];
     memset(&buffer,'\0',sizeof(buffer));
@@ -121,7 +123,9 @@ int processREP(char str[], int cont){
                 strcpy(substr,buffer);
                 strncat(substr1, substr, strlen(substr)-size_Name);
                 strcat(rm.path, substr1);
-            }else{
+            }else if(strcasecmp("RUTA", name) == 0){
+                strcat(rm.ruta, buffer);
+           }else{
                 printf(RED "ERROR: COMANDO INEXISTENTE\n" RESET);
                 return 0;
             }
@@ -154,6 +158,8 @@ int processREP(char str[], int cont){
              strcpy(substr,buffer);
              strncat(substr1, substr, strlen(substr)-size_Name);
              strcat(rm.path, substr1);
+        }else if(strcasecmp("RUTA", name) == 0){
+             strcat(rm.ruta, buffer);
         }else{
             printf(RED "ERROR: COMANDO INEXISTENTE \n" RESET);
             return 0;

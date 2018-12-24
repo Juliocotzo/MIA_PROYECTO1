@@ -25,6 +25,8 @@ typedef struct mkusr{
     char grp[15];
 } mkusr_init;
 
+void mkusr(char name[], char pwd[], char grp[]);
+
 int processMKUSR(char str[], int cont){
     if(cont == -1){
         printf(RED "ERROR: COMANDO SIN PARAMETROS \n" RESET);
@@ -99,7 +101,31 @@ int processMKUSR(char str[], int cont){
     }
 
     printf("\nUsuario->%s|Password->%s|GRP->%s|\n",rm.usr,rm.password,rm.grp);
+    mkusr(rm.usr,rm.password,rm.grp);
 
 
     return 0;
+}
+
+void mkusr(char name[], char pwd[], char grp[]){
+    printf("\n********************MKUSR**************************");
+    if(bandera_log==1&&strcmp(usuario,"root")==0){
+        if(strcmp(name,"")!=0 && strcmp(pwd,"")!=0 && strcmp(grp,"")!=0){
+            char aux[100]="";
+            idu++;
+            sprintf(aux,"%d",idu);
+            strcat(aux,", U, ");
+            strcat(aux,grp);
+            strcat(aux,", ");
+            strcat(aux,name);
+            strcat(aux,", ");
+            strcat(aux,pwd);
+            strcat(aux,"\n");
+            editaruser(aux,path_activa,name_activo);
+        }else{
+            printf("\nERROR: Faltan parametros para poder realizar la accion");
+        }
+    }else{
+        printf("\nERROR: No se ha iniciado ninguna sesion o el usuario no es root");
+    }
 }

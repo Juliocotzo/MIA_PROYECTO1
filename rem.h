@@ -5,10 +5,6 @@
 #include <stdbool.h>
 #include <dirent.h>
 #include <errno.h>
-#include <math.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-//#include "estructuras.h"
 
 #define RED   "\x1B[1;31m"
 #define GRN   "\x1B[32m"
@@ -19,28 +15,22 @@
 #define WHT   "\x1B[37m"
 #define RESET "\x1B[0m"
 
-typedef struct chmod{
-    char path[50];
-    char ugo[15];
-    char R[15];
-} chmod_init;
+typedef struct rem{
+    char path[80];
+} rem_init;
 
-
-int processCHMOD(char str[], int cont){
+int processREM(char str[], int cont){
     if(cont == -1){
-        printf(RED "ERROR: COMANDO SIN PARAMETROS \n" RESET);
+        printf(RED "ERROR: COMANDO SIN PARAMETROS\n" RESET);
         return 0;
     }
-    chmod_init rm;
+    rem_init rm;
     memset(&rm.path,'\0',sizeof(rm.path));
-    memset(&rm.ugo,'\0',sizeof(rm.ugo));
-    memset(&rm.R,'\0',sizeof(rm.R));
     // Base Program
     char ch, buffer[100];
     memset(&buffer,'\0',sizeof(buffer));
     int j=0;
     bool read = true;
-    bool num = true;
     char name[10];
     memset(&name,'\0',sizeof(name));
     while((ch = str[cont++]) != '\0'){
@@ -49,73 +39,48 @@ int processCHMOD(char str[], int cont){
             memset(&name,'\0',sizeof(name));
             strcat(name, buffer);
             j = 0;
-            // num = !num;
             memset(&buffer,'\0',sizeof(buffer));
         }
         if(ch == '\"' || ch == '\”'){
             read = !read;
         }
-        if(isdigit(ch) && num){
-            buffer[j++] = ch;
-        }
-        if(isalpha(ch) || ch == '/' || ch == '.' || ch == '_'){
+        if(isalnum(ch) || ch == '/' || ch == '.' || ch == '_'){
             buffer[j++] = ch;
         }
         if(ch == '#'){
             break;
         }
-        if(ch == ' '  && !read){
+        if(ch == ' ' && !read){
             buffer[j++] = ch;
-        }else if((ch == ' ' || ch == '\n') && (j != 0) && read){
+        }
+        else if((ch == ' ' || ch == '\n') && (j != 0) && read){
+
             buffer[j] = '\0';
             if(strcasecmp("PATH", name) == 0){
                 strcat(rm.path, buffer);
-            }
-            else if(strcasecmp("R", buffer) == 0){
-                strcat(rm.R, "R");
-
-            }else if(strcasecmp("UGO", name) == 0){
-                strcat(rm.ugo, buffer);
-
             }else{
-                printf(RED "ERROR: COMANDO INEXISTENTE1\n" RESET);
-
-                printf("ch:%c",ch);
-                printf("buffer:%s",buffer);
+                // Errores
+                printf(RED "ERROR: COMANDO INEXISTENTE\n" RESET);
                 return 0;
             }
             j = 0;
             memset(&buffer,'\0',sizeof(buffer));
         }
     }
-
-    if((j != 0) && read ){
+    if((j != 0) && read){
         buffer[j] = '\0';
-        // Posible optimizacion
         if(strcasecmp("PATH", name) == 0){
             strcat(rm.path, buffer);
-        }
-        else if(strcasecmp("R", buffer) == 0){
-            strcat(rm.R, "R");
-
-        }else if(strcasecmp("UGO", name) == 0){
-            strcat(rm.ugo, buffer);
-
         }else{
-            printf(RED "ERROR: COMANDO INEXISTENTE2\n" RESET);
-
-            printf("ch:%c",ch);
-            printf("buffer:%s",buffer);
+            // Errores
+            printf(RED "ERROR: COMANDO INEXISTENTE\n" RESET);
             return 0;
         }
         j = 0;
         memset(&buffer,'\0',sizeof(buffer));
     }
 
-    printf("\nPATH->%s|UGO->%s|R->%s|\n",rm.path,rm.ugo,rm.R);
-
+    printf("\nPATH->%s\n",rm.path);
 
     return 0;
 }
-
-

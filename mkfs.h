@@ -20,7 +20,7 @@
 #define RESET "\x1B[0m"
 
 void mkfs(char id[], char type[]);
-void formato2(char direccion[], char name[]);
+void formatoEXT3(char direccion[], char name[]);
 void upper_string(char s[]);
 int numeroBloques(int size);
 void EXT3(char path[], int indice, int n);
@@ -168,9 +168,9 @@ void mkfs(char id[], char type[]){
 
         if (bandera==1) {
             if(strcmp(type,"FAST")==0){
-                formato2(direccion,name);
+                formatoEXT3(direccion,name);
             }else if(strcmp(type,"FULL")==0){
-                formato2(direccion,name);
+                formatoEXT3(direccion,name);
             }else{
                 printf("\nERROR: Parametro type erroneo");
             }
@@ -182,7 +182,7 @@ void mkfs(char id[], char type[]){
     }
 }
 
-void formato2(char direccion[], char name[]){
+void formatoEXT3(char direccion[], char name[]){
     int inicio;
     int numeroN;
     int bandera=0;
@@ -267,6 +267,9 @@ void EXT3(char path[], int indice, int n){
     SB.s_block_start = SB.s_inode_start + (sizeof(inodo)*n);
 
     inicio_sb = disco.mbr_partition[indice].part_start;
+
+
+    printf("\nINICIO->|BITMAPINODES->%d|BITMAPBLOQUES->%d|INODES->%d|BLOQUES->%d\n",SB.s_bm_inode_start,SB.s_bm_block_start,SB.s_inode_start,SB.s_block_start);
 
     /*********************************************************************************
      **                                   INODO                                     **

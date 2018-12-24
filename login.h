@@ -19,23 +19,26 @@
 #define WHT   "\x1B[37m"
 #define RESET "\x1B[0m"
 
+
+extern char usuario[10]="";
+extern char contrasenia[10]="";
+extern char id_activo[10]="";
+char id_activo2;
+extern char id_activo3[10]="";
+extern char path_activa[50]="";
+extern char name_activo[25]="";
+extern int bandera_log = 0;
+
+extern int idu=1;
+extern int idg=1;
+
+
+
 typedef struct login{
     char usr[15];
     char password[15];
     char id[15];
 } login_init;
-
-char usuario[10]="";
-char contrasenia[10]="";
-char id_activo[10]="";
-char id_activo2;
-char id_activo3[10]="";
-char path_activa[50]="";
-char name_activo[25]="";
-int bandera_log = 0;
-
-int idu=1;
-int idg=1;
 
 void login(char usr[], char pwd[], char id[]);
 
@@ -121,7 +124,7 @@ int processLOGIN(char str[], int cont){
     printf("\nUsuario->%s|Password->%s|Id->%s|\n",rm.usr,rm.password,rm.id);
     login(rm.usr,rm.password,rm.id);
 
-
+    printf("\nBANDERA LOG--->%d\n",bandera_log);
     return 0;
 }
 
@@ -150,7 +153,7 @@ void login(char usr[], char pwd[], char id[]){
     int i;
     int inicio_bloque;
 
-    printf("\n********************LOGIN**************************");
+    printf(YEL "\nLogin\n" RESET);
     if(bandera_log==0){
         if(strcmp(id,"")!=0 && strcmp(pwd,"")!=0 && strcmp(usr,"")!=0){
 

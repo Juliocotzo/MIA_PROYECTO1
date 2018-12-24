@@ -3,6 +3,7 @@
 #include "analizador.h"
 
 
+
 int main(){
 
     char str[250];
@@ -27,10 +28,12 @@ int main(){
         if(strcmp(str, "EXEC1")==0){
 
             processCommand("exec -path->\"/home/julio/Documentos/Qt Creator/PROYECTO1/Entrada.sh\"");
+        }else{
+            processCommand(str);
         }
 
 
-        //processCommand(str);
+
         memset(&str,'\0',sizeof(str));
 
     } while (true);
