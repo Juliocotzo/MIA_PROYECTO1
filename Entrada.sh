@@ -20,3 +20,4 @@ login -usr->root -pwd->123 -id->vda1
 #logout
 
 Mkdir -P -path->/home/user/docs/usac
+mkfile -size->10 -path->/home/user/docs/a.txt
